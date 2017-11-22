@@ -1,6 +1,8 @@
 // Package acronym converts a phrase to an acronym
 package acronym
 
+import "strings"
+
 // Abbreviate converts a phrase to an acronym
 //
 // Examples:
@@ -8,20 +10,13 @@ package acronym
 // Abbreviate("Portable Network Graphics")  => "PNG"
 // Abbreviate("First In, First Out")        => "FIFO"
 func Abbreviate(s string) string {
-	abbreviations := map[string]string{
-		"Portable Network Graphics":               "PNG",
-		"Ruby on Rails":                           "ROR",
-		"First In, First Out":                     "FIFO",
-		"PHP: Hypertext Preprocessor":             "PHP",
-		"GNU Image Manipulation Program":          "GIMP",
-		"Complementary metal-oxide semiconductor": "CMOS",
+	s = strings.Replace(s, "-", " ", -1)
+	parts := strings.Split(s, " ")
+	var abbrv string
+
+	for _, part := range parts {
+		abbrv += strings.ToUpper(string(part[0]))
 	}
 
-	abbrv, ok := abbreviations[s]
-
-	if ok {
-		return abbrv
-	}
-
-	return "IDK"
+	return abbrv
 }
